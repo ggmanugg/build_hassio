@@ -53,11 +53,11 @@ touch ~/dehydrated/domains.txt
 cat >> ~/dehydrated/domains.txt << EOF
 $domain
 EOF
-wget https://raw.githubusercontent.com/ggmanugg/setup_server/master/hassio/config -P ~/dehydrated/
+sudo cp ~/build_hassio/config ~/dehydrated/
 sudo sed -i -e "s/answer/$answer/g" ~/dehydrated/config
 
 #Setup hook.sh
-wget https://raw.githubusercontent.com/ggmanugg/setup_server/master/hassio/hook.sh -P ~/dehydrated/
+sudo cp ~/build_hassio/hook.sh ~/dehydrated/
 sudo sed -i -e "s/ind/$domain/g" ~/dehydrated/hook.sh
 sudo sed -i -e "s/int/$token/g" ~/dehydrated/hook.sh
 sudo sed -i -e "s/usern/$usern/g" ~/dehydrated/hook.sh
