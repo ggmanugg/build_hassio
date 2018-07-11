@@ -41,9 +41,9 @@ select answer in "${choices[@]}"; do
 done
 
 #Prerequisites
-apt-get update
-apt-get upgrade -y
-rm -r ~/dehydrated
+sudo apt-get update
+sudo apt-get upgrade -y
+sudo rm -r ~/dehydrated
 
 #Download prerequisites
 git clone https://github.com/lukas2511/dehydrated.git ~/dehydrated
