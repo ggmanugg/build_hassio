@@ -1,0 +1,5 @@
+# Which challenge should be used? Currently http-01 and dns-01 are supported
+CHALLENGETYPE="answer"
+
+# Script to execute the DNS challenge and run after cert generation
+HOOK="${BASEDIR}/hook.sh"
