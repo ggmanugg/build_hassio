@@ -52,4 +52,3 @@ EOF
 sudo systemctl daemon-reload
 sudo systemctl enable homeassistant@$usern.service
 sudo systemctl start homeassistant@$usern.service
-sudo bash ~/build_hassio/duckdns.sh
