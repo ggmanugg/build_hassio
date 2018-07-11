@@ -10,7 +10,7 @@ You can access it under http://ipaddress:8123
 ## Requirements
 
 ```
-wget
+git
 python3-pip 
 python3-venv
 homeassistant
@@ -22,7 +22,8 @@ wheel
 Run as root:
 
 ```bash
-wget https://raw.githubusercontent.com/ggmanugg/setup_server/master/hassio/install.sh
+git clone https://github.com/ggmanugg/build_hassio.git
+cd build_hassio
 sudo bash ./install.sh
 ```
 
