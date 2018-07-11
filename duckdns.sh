@@ -69,8 +69,9 @@ sudo ./dehydrated --register  --accept-terms
 sudo ./dehydrated -c
 
 #Add certificate to home assistant
-#cert="~/dehydrated/certs/"$domain"/fullchain.pem/"
-#sed -i '/base_url/s/.*/  base_url: $domain:8123\n  ssl_certificate: $cert/' ~/.homeassistant/configuration.yaml
+cert=$(echo $(sudo find /home/admin/dehydrated/certs/ -name "fullchain.pem"))
+key=$(echo $(sudo find /home/admin/dehydrated/certs/ -name "privkey.pem*"))
+sed -i '/base_url/s/.*/  base_url: $domain:8123\n  ssl_certificate: $cert\n  ssl_key: $key/' ~/.homeassistant/configuration.yaml
 
 #Restart home assistant
 sudo systemctl restart homeassistant@$usern.service
