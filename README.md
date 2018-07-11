@@ -5,7 +5,7 @@ One command to install Home Assistant on an Ubuntu Server 18.04 LTS
 
 Just setup the server without configurations
 
-You can access it under http://ipaddress:8123
+You can access it under https://ipaddress:8123
 
 ## Requirements
 
