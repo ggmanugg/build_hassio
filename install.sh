@@ -17,6 +17,29 @@ fi
 echo Enter your current username:
 read usern
 
+#Domain name
+echo Enter your duckdns domain name e.g. test.duckdns.org:
+read domain
+
+#Duckdns token
+echo Enter your duckdns token:
+read token
+
+#Letsencrypt challenge 
+echo Which challenge should be used? Currently http-01 and dns-01 are supported
+oldIFS=$IFS
+IFS=$'\n'
+choices=( http-01 dns-01 )
+IFS=$oldIFS
+PS3="Please enter your choice: "
+select answer in "${choices[@]}"; do
+  for item in "${choices[@]}"; do
+    if [[ $item == $answer ]]; then
+      break 2
+    fi
+  done
+done
+
 #Up-to-date
 sudo apt-get update
 sudo apt-get upgrade -y
@@ -52,3 +75,53 @@ EOF
 sudo systemctl daemon-reload
 sudo systemctl enable homeassistant@$usern.service
 sudo systemctl start homeassistant@$usern.service
+
+#Begin duckdns letsencrypt
+
+#Prerequisites
+sudo rm -r ~/dehydrated
+
+#Download prerequisites
+git clone https://github.com/lukas2511/dehydrated.git ~/dehydrated
+
+#Setup dehydrated
+touch ~/dehydrated/domains.txt
+cat >> ~/dehydrated/domains.txt << EOF
+$domain
+EOF
+sudo cp ~/build_hassio/config ~/dehydrated/
+sudo sed -i -e "s/answer/$answer/g" ~/dehydrated/config
+
+#Setup hook.sh
+sudo cp ~/build_hassio/hook.sh ~/dehydrated/
+sudo sed -i -e "s/ind/$domain/g" ~/dehydrated/hook.sh
+sudo sed -i -e "s/int/$token/g" ~/dehydrated/hook.sh
+sudo sed -i -e "s/usern/$usern/g" ~/dehydrated/hook.sh
+sudo chmod 755 ~/dehydrated/hook.sh
+
+#Generate certificate
+cd ~/dehydrated
+sudo ./dehydrated --register  --accept-terms
+sudo ./dehydrated -c
+
+#Add certificate to home assistant
+cert=$(echo $(sudo find /home/admin/dehydrated/certs/ -name "fullchain.pem"))
+key=$(echo $(sudo find /home/admin/dehydrated/certs/ -name "privkey.pem*"))
+
+sed -i '/^http\:/a \ \ base_url\: '"$domain"':8123' ~/.homeassistant/configuration.yaml
+sed -i '/^http\:/a \ \ ssl_certificate\: '"$cert"'' ~/.homeassistant/configuration.yaml
+sed -i '/^http\:/a \ \ ssl_key\: '"$key"'' ~/.homeassistant/configuration.yaml
+
+#Restart home assistant
+sudo systemctl restart homeassistant@$usern.service
+
+#Clean up
+clear
+echo  _____ ___ _   _ ___ ____  _   _ 
+echo |  ___|_ _| \ | |_ _/ ___|| | | |
+echo | |_   | ||  \| || |\___ \| |_| |
+echo |  _|  | || |\  || | ___) |  _  |
+echo |_|   |___|_| \_|___|____/|_| |_|                                  
+echo \n
+echo \n
+echo Go to https://ipaddress:8123 and enjoy your Home Assistant
