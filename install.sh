@@ -119,12 +119,10 @@ sudo systemctl restart homeassistant@$usern.service
 #Clean up
 clear
 cat << "EOF"
- _____ ___ _   _ ___ ____  _   _ 
-|  ___|_ _| \ | |_ _/ ___|| | | |
+  _____ ___ _   _ ___ ____  _   _ 
+ |  ___|_ _| \ | |_ _/ ___|| | | |
  | |_   | ||  \| || |\___ \| |_| |
  |  _|  | || |\  || | ___) |  _  |
  |_|   |___|_| \_|___|____/|_| |_|    
- EOF
-echo \n
-echo \n
+EOF
 echo Go to https://ipaddress:8123 and enjoy your Home Assistant
