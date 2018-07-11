@@ -57,6 +57,7 @@ source /home/"$usern"/homeassistant/bin/activate && python3 -m pip install homea
 
 #Setup hass service
 source /home/"$usern"/homeassistant/bin/activate && hasslocation=$(echo $(whereis hass)|awk '{print $2}')
+sudo rm /etc/systemd/system/homeassistant@$usern.service
 sudo touch /etc/systemd/system/homeassistant@$usern.service
 sudo cat >> /etc/systemd/system/homeassistant@$usern.service <<EOF
 [Unit]
@@ -117,11 +118,13 @@ sudo systemctl restart homeassistant@$usern.service
 
 #Clean up
 clear
-echo  _____ ___ _   _ ___ ____  _   _ 
-echo |  ___|_ _| \ | |_ _/ ___|| | | |
-echo | |_   | ||  \| || |\___ \| |_| |
-echo |  _|  | || |\  || | ___) |  _  |
-echo |_|   |___|_| \_|___|____/|_| |_|                                  
+cat << "EOF"
+ _____ ___ _   _ ___ ____  _   _ 
+|  ___|_ _| \ | |_ _/ ___|| | | |
+ | |_   | ||  \| || |\___ \| |_| |
+ |  _|  | || |\  || | ___) |  _  |
+ |_|   |___|_| \_|___|____/|_| |_|    
+ EOF
 echo \n
 echo \n
 echo Go to https://ipaddress:8123 and enjoy your Home Assistant
