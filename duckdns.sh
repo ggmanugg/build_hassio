@@ -1,8 +1,8 @@
 #!/bin/bash
 
 #######################################################################
-#Setup Home Assistant on an Ubuntu Server 18.04 LTS                   #
-#This script just include the basic installation                      #
+#Setup Home Assistant on Ubuntu Server 18.04 LTS                      #
+#This script setup duckdns and letsencrypt                            #
 #This script is written by ggmanugg                                   #
 #[C] 2018 Manuel Berger                                               #
 #######################################################################
