@@ -33,7 +33,7 @@ source /home/"$usern"/homeassistant/bin/activate && python3 -m pip install wheel
 source /home/"$usern"/homeassistant/bin/activate && python3 -m pip install homeassistant
 
 #Setup hass service
-hasslocation=$(echo $(whereis hass)|awk '{print $2}')
+source /home/"$usern"/homeassistant/bin/activate && hasslocation=$(echo $(whereis hass)|awk '{print $2}')
 sudo touch /etc/systemd/system/homeassistant@$usern.service
 sudo cat >> /etc/systemd/system/homeassistant@$usern.service <<EOF
 [Unit]
