@@ -3,9 +3,9 @@
 
 One command to install Home Assistant on an Ubuntu Server 18.04 LTS with Duck DNS and Let's Encrypt
 
-Just setup the server without configurations
-
 You can access it under https://ipaddress:8123
+
+The certificates will be renewed automatically and the duckdns entry will be adjusted continuously
 
 ## Requirements
 
