@@ -74,28 +74,28 @@ sudo systemctl start homeassistant@$usern.service
 #Begin duckdns letsencrypt
 
 #Prerequisites
-sudo rm -r ~/dehydrated
+sudo rm -r /home/"$usern"/dehydrated
 
 #Download prerequisites
-git clone https://github.com/lukas2511/dehydrated.git ~/dehydrated
+git clone https://github.com/lukas2511/dehydrated.git /home/"$usern"/dehydrated
 
 #Setup dehydrated
-touch ~/dehydrated/domains.txt
-cat >> ~/dehydrated/domains.txt << EOF
+touch /home/"$usern"/dehydrated/domains.txt
+cat >> /home/"$usern"/dehydrated/domains.txt << EOF
 $domain
 EOF
-cp ~/build_hassio/config ~/dehydrated/
-sudo sed -i -e "s/answer/$answer/g" ~/dehydrated/config
+cp /home/"$usern"/build_hassio/config /home/"$usern"/dehydrated/
+sudo sed -i -e "s/answer/$answer/g" /home/"$usern"/dehydrated/config
 
 #Setup hook.sh
-cp ~/build_hassio/hook.sh ~/dehydrated/
-sudo sed -i -e "s/ind/$domain/g" ~/dehydrated/hook.sh
-sudo sed -i -e "s/int/$token/g" ~/dehydrated/hook.sh
-sudo sed -i -e "s/usern/$usern/g" ~/dehydrated/hook.sh
-sudo chmod 755 ~/dehydrated/hook.sh
+cp /home/"$usern"/build_hassio/hook.sh /home/"$usern"/dehydrated/
+sudo sed -i -e "s/ind/$domain/g" /home/"$usern"/dehydrated/hook.sh
+sudo sed -i -e "s/int/$token/g" /home/"$usern"/dehydrated/hook.sh
+sudo sed -i -e "s/usern/$usern/g" /home/"$usern"/dehydrated/hook.sh
+sudo chmod 755 /home/"$usern"/dehydrated/hook.sh
 
 #Generate certificate
-cd ~/dehydrated
+cd /home/"$usern"/dehydrated
 sudo ./dehydrated --register  --accept-terms
 sudo ./dehydrated -c
 
@@ -103,22 +103,22 @@ sudo ./dehydrated -c
 cert=$(echo $(sudo find /home/admin/dehydrated/certs/ -name "fullchain.pem"))
 key=$(echo $(sudo find /home/admin/dehydrated/certs/ -name "privkey.pem*"))
 
-sed -i '/^http\:/a \ \ base_url\: '"$domain"':8123' ~/.homeassistant/configuration.yaml
-sed -i '/^http\:/a \ \ ssl_certificate\: '"$cert"'' ~/.homeassistant/configuration.yaml
-sed -i '/^http\:/a \ \ ssl_key\: '"$key"'' ~/.homeassistant/configuration.yaml
+sed -i '/^http\:/a \ \ base_url\: '"$domain"':8123' /home/"$usern"/.homeassistant/configuration.yaml
+sed -i '/^http\:/a \ \ ssl_certificate\: '"$cert"'' /home/"$usern"/.homeassistant/configuration.yaml
+sed -i '/^http\:/a \ \ ssl_key\: '"$key"'' /home/"$usern"/.homeassistant/configuration.yaml
 
 #Restart home assistant
 sudo systemctl restart homeassistant@$usern.service
 
 #Setup duckdns cron
-mkdir ~/duckdns
+mkdir /home/"$usern"/duckdns
 subd=$(echo $domain | sed 's/[.].*$//')
-touch ~/duckdns/duck.sh
-cat >> ~/duckdns/duck.sh << EOF
-echo url="https://www.duckdns.org/update?domains=$subd&token=$token&ip=" | curl -k -o ~/duckdns/duck.log -K -
+touch /home/"$usern"/duckdns/duck.sh
+cat >> /home/"$usern"/duckdns/duck.sh << EOF
+echo url="https://www.duckdns.org/update?domains=$subd&token=$token&ip=" | curl -k -o /home/"$usern"/duckdns/duck.log -K -
 EOF
-chmod 700 ~/duckdns/duck.sh
-sudo ~/duckdns/duck.sh
+chmod 700 /home/"$usern"/duckdns/duck.sh
+sudo /home/"$usern"/duckdns/duck.sh
 
 #Add crontabs
 crontab -l > mycron
@@ -127,7 +127,7 @@ crontab mycron
 rm mycron
 
 crontab -l > mycron
-echo "*/5 * * * * ~/duckdns/duck.sh >/dev/null 2>&1" >> mycron
+echo "*/5 * * * * /home/"$usern"/duckdns/duck.sh >/dev/null 2>&1" >> mycron
 crontab mycron
 rm mycron
 
