@@ -23,8 +23,7 @@ Run as root:
 
 ```bash
 git clone https://github.com/ggmanugg/build_hassio.git
-cd build_hassio
-sudo bash ./install.sh
+sudo bash build_hassio/install.sh
 ```
 
 ## Supported Machine types
