@@ -22,10 +22,12 @@ sudo apt-get install python3-pip python3-venv -y
 python3 -m venv homeassistant
 cd /home/"$usern"/homeassistant
 
-source ./bin/activate && python3 -m pip install wheel
+source ./bin/activate 
+python3 -m pip install wheel
 
 #Install Home Assistant
-source ./bin/activate && python3 -m pip install homeassistant
+source ./bin/activate
+python3 -m pip install homeassistant
 
 #Setup hass service
 source ./bin/activate && hasslocation=$(echo $(whereis hass)|awk '{print $2}')
