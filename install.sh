@@ -11,29 +11,6 @@
 echo Enter your current username:
 read usern
 
-#Domain name
-echo Enter your duckdns domain name e.g. test.duckdns.org:
-read domain
-
-#Duckdns token
-echo Enter your duckdns token:
-read token
-
-#Letsencrypt challenge 
-echo Which challenge should be used? Currently http-01 and dns-01 are supported
-oldIFS=$IFS
-IFS=$'\n'
-choices=( http-01 dns-01 )
-IFS=$oldIFS
-PS3="Please enter your choice: "
-select answer in "${choices[@]}"; do
-  for item in "${choices[@]}"; do
-    if [[ $item == $answer ]]; then
-      break 2
-    fi
-  done
-done
-
 #Up-to-date
 sudo apt-get update
 sudo apt-get upgrade -y
@@ -43,14 +20,15 @@ sudo apt-get install python3-pip python3-venv -y
 
 #Setup virtual environment
 python3 -m venv homeassistant
-cd 
-source /home/"$usern"/homeassistant/bin/activate && python3 -m pip install wheel
+cd /home/"$usern"/homeassistant
+
+source ./bin/activate && python3 -m pip install wheel
 
 #Install Home Assistant
-source /home/"$usern"/homeassistant/bin/activate && python3 -m pip install homeassistant
+source ./bin/activate && python3 -m pip install homeassistant
 
 #Setup hass service
-source /home/"$usern"/homeassistant/bin/activate && hasslocation=$(echo $(whereis hass)|awk '{print $2}')
+source ./bin/activate && hasslocation=$(echo $(whereis hass)|awk '{print $2}')
 sudo rm /etc/systemd/system/homeassistant@$usern.service
 sudo touch /etc/systemd/system/homeassistant@$usern.service
 sudo cat >> /etc/systemd/system/homeassistant@$usern.service <<EOF
