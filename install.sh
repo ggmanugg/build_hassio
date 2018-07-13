@@ -43,7 +43,7 @@ sudo apt-get install python3-pip python3-venv -y
 
 #Setup virtual environment
 python3 -m venv homeassistant
-
+cd 
 source /home/"$usern"/homeassistant/bin/activate && python3 -m pip install wheel
 
 #Install Home Assistant
