@@ -117,6 +117,12 @@ sed -i '/^http\:/a \ \ ssl_key\: '"$key"'' ~/.homeassistant/configuration.yaml
 #Restart home assistant
 sudo systemctl restart homeassistant@$usern.service
 
+#Add crontab
+crontab -l > mycron
+echo "0 1 1 * * /home/$usern/dehydrated/dehydrated -c" >> mycron
+crontab mycron
+rm mycron
+
 #Clean up
 clear
 cat << "EOF"
@@ -126,5 +132,5 @@ cat << "EOF"
  |  _|  | || |\  || | ___) |  _  |
  |_|   |___|_| \_|___|____/|_| |_|    
 EOF
-printf \n
+echo \
 echo Go to https://ipaddress:8123 and enjoy your Home Assistant
