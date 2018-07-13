@@ -51,7 +51,7 @@ python3 -m pip install wheel
 python3 -m pip install homeassistant
 
 #Setup hass service
-hasslocation=$(echo $(whereis hass)|awk '{print $2}')
+source /home/"$usern"/homeassistant/bin/activate && hasslocation=$(echo $(whereis hass)|awk '{print $2}')
 sudo bash -c 'rm /etc/systemd/system/homeassistant@'"$usern"'.service'
 sudo bash -c 'touch /etc/systemd/system/homeassistant@'"$usern"'.service'
 sudo bash -c 'cat >> /etc/systemd/system/homeassistant@'"$usern"'.service <<EOF
