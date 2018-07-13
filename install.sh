@@ -48,7 +48,8 @@ sudo apt-get upgrade -y
 sudo apt-get install python3-pip python3-venv -y
 
 #Setup virtual environment
-sudo python3 -m venv homeassistant /home/"$usern"/
+sudo python3 -m venv homeassistant
+sudo mv /home/"$usern"/build_hassio/homeassistant /home/"$usern"/
 
 source /home/"$usern"/homeassistant/bin/activate && python3 -m pip install wheel
 
