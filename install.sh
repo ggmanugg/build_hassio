@@ -128,7 +128,12 @@ sudo ~/duckdns/duck.sh
 
 #Add crontabs
 crontab -l > mycron
-echo -e 0 1 1 * * /home/$usern/dehydrated/dehydrated -c'\n'*/5 * * * * ~/duckdns/duck.sh >/dev/null 2>&1 >> mycron
+echo "0 1 1 * * /home/$usern/dehydrated/dehydrated -c" >> mycron
+crontab mycron
+rm mycron
+
+crontab -l > mycron
+echo "*/5 * * * * ~/duckdns/duck.sh >/dev/null 2>&1" >> mycron
 crontab mycron
 rm mycron
 
