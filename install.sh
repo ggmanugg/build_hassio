@@ -53,7 +53,7 @@ source /home/"$usern"/homeassistant/bin/activate && python3 -m pip install homea
 source /home/"$usern"/homeassistant/bin/activate && hasslocation=$(echo $(whereis hass)|awk '{print $2}')
 sudo rm /etc/systemd/system/homeassistant@$usern.service
 sudo touch /etc/systemd/system/homeassistant@$usern.service
-sudo cat >> /etc/systemd/system/homeassistant@$usern.service <<EOF
+sudo su -c "cat >> /etc/systemd/system/homeassistant@$usern.service <<EOF
 [Unit]
 Description=Home Assistant
 After=network-online.target
@@ -65,7 +65,7 @@ ExecStart=$hasslocation -c '/home/$usern/.homeassistant'
 
 [Install]
 WantedBy=multi-user.target
-EOF
+EOF" admin
 
 sudo systemctl daemon-reload
 sudo systemctl enable homeassistant@$usern.service
