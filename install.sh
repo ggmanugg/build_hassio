@@ -48,7 +48,7 @@ sudo apt-get upgrade -y
 sudo apt-get install python3-pip python3-venv -y
 
 #Setup virtual environment
-python3 -m venv homeassistant
+sudo su -c "python3 -m venv homeassistant" admin
 
 source /home/"$usern"/homeassistant/bin/activate && python3 -m pip install wheel
 
