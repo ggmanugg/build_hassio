@@ -7,12 +7,6 @@
 #[C] 2018 Manuel Berger                                               #
 #######################################################################
 
-#Check root
-if [[ $EUID -ne 0 ]]; then
-   echo This script must be run as root
-   exit 1
-fi
-
 #User name
 echo Enter your current username:
 read usern
@@ -48,7 +42,7 @@ sudo apt-get upgrade -y
 sudo apt-get install python3-pip python3-venv -y
 
 #Setup virtual environment
-sudo -H -u admin bash -c 'python3 -m venv homeassistant'
+python3 -m venv homeassistant
 
 source /home/"$usern"/homeassistant/bin/activate && python3 -m pip install wheel
 
@@ -90,11 +84,11 @@ touch ~/dehydrated/domains.txt
 cat >> ~/dehydrated/domains.txt << EOF
 $domain
 EOF
-sudo cp ~/build_hassio/config ~/dehydrated/
+cp ~/build_hassio/config ~/dehydrated/
 sudo sed -i -e "s/answer/$answer/g" ~/dehydrated/config
 
 #Setup hook.sh
-sudo cp ~/build_hassio/hook.sh ~/dehydrated/
+cp ~/build_hassio/hook.sh ~/dehydrated/
 sudo sed -i -e "s/ind/$domain/g" ~/dehydrated/hook.sh
 sudo sed -i -e "s/int/$token/g" ~/dehydrated/hook.sh
 sudo sed -i -e "s/usern/$usern/g" ~/dehydrated/hook.sh
