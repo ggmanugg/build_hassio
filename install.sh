@@ -116,9 +116,19 @@ sed -i '/^http\:/a \ \ ssl_key\: '"$key"'' ~/.homeassistant/configuration.yaml
 #Restart home assistant
 sudo systemctl restart homeassistant@$usern.service
 
-#Add crontab
+#Setup duckdns cron
+mkdir ~/duckdns
+subd=$(echo $domain | sed 's/[.].*$//')
+touch ~/duckdns/duck.sh
+cat >> ~/duckdns/duck.sh << EOF
+echo url="https://www.duckdns.org/update?domains=$subd&token=$token&ip=" | curl -k -o ~/duckdns/duck.log -K -
+EOF
+chmod 700 ~/duckdns/duck.sh
+sudo ~/duckdns/duck.sh
+
+#Add crontabs
 crontab -l > mycron
-echo "0 1 1 * * /home/$usern/dehydrated/dehydrated -c" >> mycron
+echo -e 0 1 1 * * /home/$usern/dehydrated/dehydrated -c'\n'*/5 * * * * ~/duckdns/duck.sh >/dev/null 2>&1 >> mycron
 crontab mycron
 rm mycron
 
@@ -131,5 +141,5 @@ cat << "EOF"
  |  _|  | || |\  || | ___) |  _  |
  |_|   |___|_| \_|___|____/|_| |_|    
 EOF
-echo \
+echo -e '\n'
 echo Go to https://ipaddress:8123 and enjoy your Home Assistant
