@@ -126,5 +126,5 @@ cat << "EOF"
  |  _|  | || |\  || | ___) |  _  |
  |_|   |___|_| \_|___|____/|_| |_|    
 EOF
-echo \n
+printf \n
 echo Go to https://ipaddress:8123 and enjoy your Home Assistant
