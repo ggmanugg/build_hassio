@@ -20,7 +20,7 @@ wheel
 
 ## Run
 
-Run as root:
+Run as following:
 
 ```bash
 git clone https://github.com/ggmanugg/build_hassio.git
