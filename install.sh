@@ -96,12 +96,12 @@ cp /home/"$usern"/build_hassio/hook.sh /home/"$usern"/dehydrated/
 sudo sed -i -e "s/ind/$domain/g" /home/"$usern"/dehydrated/hook.sh
 sudo sed -i -e "s/int/$token/g" /home/"$usern"/dehydrated/hook.sh
 sudo sed -i -e "s/usern/$usern/g" /home/"$usern"/dehydrated/hook.sh
-sudo chmod 755 /home/"$usern"/dehydrated/hook.sh
+chmod 755 /home/"$usern"/dehydrated/hook.sh
 
 #Generate certificate
 cd /home/"$usern"/dehydrated
-sudo ./dehydrated --register  --accept-terms
-sudo ./dehydrated -c
+./dehydrated --register  --accept-terms
+./dehydrated -c
 
 #Add certificate to home assistant
 cert=$(echo $(sudo find /home/admin/dehydrated/certs/ -name "fullchain.pem"))
@@ -112,7 +112,7 @@ sed -i '/^http\:/a \ \ ssl_certificate\: '"$cert"'' /home/"$usern"/.homeassistan
 sed -i '/^http\:/a \ \ ssl_key\: '"$key"'' /home/"$usern"/.homeassistant/configuration.yaml
 
 #Restart home assistant
-sudo systemctl restart homeassistant@$usern.service
+sudo bash -c 'sudo systemctl restart homeassistant@'"$usern"'.service'
 
 #Setup duckdns cron
 mkdir /home/"$usern"/duckdns
