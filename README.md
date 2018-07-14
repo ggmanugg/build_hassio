@@ -27,6 +27,8 @@ git clone https://github.com/ggmanugg/build_hassio.git
 bash build_hassio/install.sh
 ```
 
+Be sure that you are in the home directory when you execute the commands
+
 ## Supported Machine types
 
 - Ubuntu Server 18.04 LTS
