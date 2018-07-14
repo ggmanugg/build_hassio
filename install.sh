@@ -53,8 +53,6 @@ python3 -m pip install homeassistant
 #Setup hass service
 source /home/"$usern"/homeassistant/bin/activate && hasslocation=$(echo $(whereis hass)|awk '{print $2}')
 
-echo $hasslocation
-
 sudo bash -c 'rm /etc/systemd/system/homeassistant@'"$usern"'.service'
 sudo bash -c 'touch /etc/systemd/system/homeassistant@'"$usern"'.service'
 sudo bash -c 'cat >> /etc/systemd/system/homeassistant@'"$usern"'.service <<EOF
@@ -72,8 +70,6 @@ EOF'
 sudo bash -c 'systemctl daemon-reload'
 sudo bash -c 'systemctl enable homeassistant@'"$usern"'.service'
 sudo bash -c 'systemctl start homeassistant@'"$usern"'.service'
-
-#OK
 
 #Begin duckdns letsencrypt
 
@@ -115,6 +111,7 @@ sed -i '/^http\:/a \ \ ssl_key\: '"$key"'' /home/"$usern"/.homeassistant/configu
 sudo bash -c 'sudo systemctl restart homeassistant@'"$usern"'.service'
 
 #Setup duckdns cron
+rm -r /home/"$usern"/duckdns
 mkdir /home/"$usern"/duckdns
 subd=$(echo $domain | sed 's/[.].*$//')
 touch /home/"$usern"/duckdns/duck.sh
