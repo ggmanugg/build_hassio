@@ -1,5 +1,5 @@
 
-# Install Home Assistant
+# Install Home Assistant on Ubuntu Server 18.04 LTS
 
 One command to install Home Assistant on an Ubuntu Server 18.04 LTS with Duck DNS and Let's Encrypt
 
