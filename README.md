@@ -10,6 +10,7 @@ The certificates will be renewed automatically and the duckdns entry will be adj
 ## Requirements
 
 ```
+bash
 git
 python3-pip 
 python3-venv
