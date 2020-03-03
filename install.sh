@@ -34,7 +34,7 @@ select answer in "${choices[@]}"; do
   done
 done
 
-#Up-to-date
+#UptoDate
 sudo apt-get update
 sudo apt-get upgrade -y
 
